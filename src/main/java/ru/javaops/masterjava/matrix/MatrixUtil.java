@@ -1,37 +1,77 @@
 package ru.javaops.masterjava.matrix;
 
 import java.util.Random;
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 
-/**
- * gkislin
- * 03.07.2016
- */
 public class MatrixUtil {
 
-    // TODO implement parallel multiplication matrixA*matrixB
-    public static int[][] concurrentMultiply(int[][] matrixA, int[][] matrixB, ExecutorService executor) throws InterruptedException, ExecutionException {
+    public static int[][] concurrentMultiply(int[][] matrixA, int[][] matrixB, ExecutorService executor) throws InterruptedException {
         final int matrixSize = matrixA.length;
         final int[][] matrixC = new int[matrixSize][matrixSize];
+
+        final int[][] matrixBTransposed = new int[matrixSize][matrixSize];
+        for (int i = 0; i < matrixSize; i++) {
+            for (int j = 0; j < matrixSize; j++) {
+                matrixBTransposed[j][i] = matrixB[i][j];
+            }
+        }
+
+        CountDownLatch latch = new CountDownLatch(MainMatrix.THREAD_NUMBER);
+
+        final int maxRowsForThread = matrixSize / MainMatrix.THREAD_NUMBER + 1;
+        int globalRowNumber = 0;
+        while (globalRowNumber < matrixSize) {
+            int startRow = globalRowNumber;
+            while (globalRowNumber - startRow < maxRowsForThread) {
+                globalRowNumber++;
+            }
+            int endRow = Math.min(globalRowNumber - 1, matrixSize - 1);
+            executor.submit(() -> {
+                for (int row = startRow; row <= endRow; row++) {
+                    final int[] rowA = matrixA[row];
+                    for (int col = 0; col < matrixSize; col++) {
+                        final int[] columnB = matrixBTransposed[col];
+                        int sum = 0;
+                        for (int i = 0; i < matrixSize; i++) {
+                            sum += rowA[i] * columnB[i];
+                        }
+                        matrixC[row][col] = sum;
+                    }
+                }
+                latch.countDown();
+            });
+        }
+        latch.await();
 
         return matrixC;
     }
 
-    // TODO optimize by https://habrahabr.ru/post/114797/
+    // optimized by https://habr.com/ru/post/114797/
     public static int[][] singleThreadMultiply(int[][] matrixA, int[][] matrixB) {
         final int matrixSize = matrixA.length;
         final int[][] matrixC = new int[matrixSize][matrixSize];
 
-        for (int i = 0; i < matrixSize; i++) {
-            for (int j = 0; j < matrixSize; j++) {
-                int sum = 0;
+        int[] thatColumn = new int[matrixSize];
+        try {
+            //noinspection InfiniteLoopStatement
+            for (int j = 0; ; j++) {
                 for (int k = 0; k < matrixSize; k++) {
-                    sum += matrixA[i][k] * matrixB[k][j];
+                    thatColumn[k] = matrixB[k][j];
                 }
-                matrixC[i][j] = sum;
+
+                for (int i = 0; i < matrixSize; i++) {
+                    int[] thisRow = matrixA[i];
+                    int sum = 0;
+                    for (int k = 0; k < matrixSize; k++) {
+                        sum += thisRow[k] * thatColumn[k];
+                    }
+                    matrixC[i][j] = sum;
+                }
             }
+        } catch (ArrayIndexOutOfBoundsException ignored) {
         }
+
         return matrixC;
     }
 
