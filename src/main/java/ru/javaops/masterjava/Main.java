@@ -1,14 +1,24 @@
 package ru.javaops.masterjava;
 
-/**
- * User: gkislin
- * Date: 05.08.2015
- *
- * @link http://caloriesmng.herokuapp.com/
- * @link https://github.com/JavaOPs/topjava
- */
+import ru.javaops.masterjava.html.TableRenderer;
+import ru.javaops.masterjava.html.Transformer;
+import ru.javaops.masterjava.xml.MainXml;
+
+import javax.xml.transform.TransformerException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
 public class Main {
-    public static void main(String[] args) {
-        System.out.format("Hello MasterJava!");
+    public static void main(String[] args) throws IOException, TransformerException {
+        OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream("users.html"));
+        String html = TableRenderer.render("topjava", new MainXml("payload.xml", "topjava").getMembers());
+        osw.write(html);
+        osw.close();
+
+        osw = new OutputStreamWriter(new FileOutputStream("groups.html"));
+        html = new Transformer("groups.xsl", "payload.xml", "topjava").transformToHtml();
+        osw.write(html);
+        osw.close();
     }
 }

@@ -47,5 +47,6 @@ public class JaxbParserTest {
         MainXml xmlTest = new MainXml("payload.xml", "topjava");
         List<User> users = xmlTest.getMembers();
         Assert.assertEquals(2, users.size());
+        users.forEach(user -> System.out.printf("Full name: %10s  |  email: %10s%n", user.getFullName(), user.getEmail()));
     }
 }
