@@ -1,11 +1,11 @@
 
 package ru.javaops.masterjava.xml.schema;
 
+import javax.xml.namespace.QName;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.annotation.XmlElementDecl;
 import jakarta.xml.bind.annotation.XmlRegistry;
 
-import javax.xml.namespace.QName;
 
 /**
  * This object contains factory methods for each 
@@ -17,7 +17,7 @@ import javax.xml.namespace.QName;
  * content can consist of schema derived interfaces 
  * and classes representing the binding of schema 
  * type definitions, element declarations and model 
- * groups.  Factory methods for each of these are
+ * groups.  Factory methods for each of these are 
  * provided in this class.
  * 
  */
@@ -66,6 +66,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Payload.Projects }
+     * 
+     */
+    public Payload.Projects createPayloadProjects() {
+        return new Payload.Projects();
+    }
+
+    /**
+     * Create an instance of {@link User.Groups }
+     * 
+     */
+    public User.Groups createUserGroups() {
+        return new User.Groups();
+    }
+
+    /**
      * Create an instance of {@link CityType }
      * 
      */
@@ -74,8 +90,28 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link CityType }{@code >}}
+     * Create an instance of {@link Project }
      * 
+     */
+    public Project createProject() {
+        return new Project();
+    }
+
+    /**
+     * Create an instance of {@link Group }
+     * 
+     */
+    public Group createGroup() {
+        return new Group();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CityType }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link CityType }{@code >}
      */
     @XmlElementDecl(namespace = "http://javaops.ru", name = "City")
     public JAXBElement<CityType> createCity(CityType value) {

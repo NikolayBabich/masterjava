@@ -1,14 +1,14 @@
 
 package ru.javaops.masterjava.xml.schema;
 
+import java.util.ArrayList;
+import java.util.List;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <p>Java class for anonymous complex type.
@@ -16,36 +16,47 @@ import java.util.List;
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType>
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;all>
- *         &lt;element name="Cities">
- *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;sequence maxOccurs="unbounded">
- *                   &lt;element ref="{http://javaops.ru}City"/>
- *                 &lt;/sequence>
- *               &lt;/restriction>
- *             &lt;/complexContent>
- *           &lt;/complexType>
- *         &lt;/element>
- *         &lt;element name="Users">
- *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;sequence maxOccurs="unbounded" minOccurs="0">
- *                   &lt;element ref="{http://javaops.ru}User"/>
- *                 &lt;/sequence>
- *               &lt;/restriction>
- *             &lt;/complexContent>
- *           &lt;/complexType>
- *         &lt;/element>
- *       &lt;/all>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;all&gt;
+ *         &lt;element name="Cities"&gt;
+ *           &lt;complexType&gt;
+ *             &lt;complexContent&gt;
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *                 &lt;sequence maxOccurs="unbounded"&gt;
+ *                   &lt;element ref="{http://javaops.ru}City"/&gt;
+ *                 &lt;/sequence&gt;
+ *               &lt;/restriction&gt;
+ *             &lt;/complexContent&gt;
+ *           &lt;/complexType&gt;
+ *         &lt;/element&gt;
+ *         &lt;element name="Users"&gt;
+ *           &lt;complexType&gt;
+ *             &lt;complexContent&gt;
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *                 &lt;sequence maxOccurs="unbounded" minOccurs="0"&gt;
+ *                   &lt;element ref="{http://javaops.ru}User"/&gt;
+ *                 &lt;/sequence&gt;
+ *               &lt;/restriction&gt;
+ *             &lt;/complexContent&gt;
+ *           &lt;/complexType&gt;
+ *         &lt;/element&gt;
+ *         &lt;element name="Projects"&gt;
+ *           &lt;complexType&gt;
+ *             &lt;complexContent&gt;
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *                 &lt;sequence maxOccurs="unbounded" minOccurs="0"&gt;
+ *                   &lt;element ref="{http://javaops.ru}Project"/&gt;
+ *                 &lt;/sequence&gt;
+ *               &lt;/restriction&gt;
+ *             &lt;/complexContent&gt;
+ *           &lt;/complexType&gt;
+ *         &lt;/element&gt;
+ *       &lt;/all&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -61,6 +72,8 @@ public class Payload {
     protected Payload.Cities cities;
     @XmlElement(name = "Users", namespace = "http://javaops.ru", required = true)
     protected Payload.Users users;
+    @XmlElement(name = "Projects", namespace = "http://javaops.ru", required = true)
+    protected Payload.Projects projects;
 
     /**
      * Gets the value of the cities property.
@@ -110,6 +123,30 @@ public class Payload {
         this.users = value;
     }
 
+    /**
+     * Gets the value of the projects property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Payload.Projects }
+     *     
+     */
+    public Payload.Projects getProjects() {
+        return projects;
+    }
+
+    /**
+     * Sets the value of the projects property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Payload.Projects }
+     *     
+     */
+    public void setProjects(Payload.Projects value) {
+        this.projects = value;
+    }
+
 
     /**
      * <p>Java class for anonymous complex type.
@@ -117,15 +154,15 @@ public class Payload {
      * <p>The following schema fragment specifies the expected content contained within this class.
      * 
      * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;sequence maxOccurs="unbounded">
-     *         &lt;element ref="{http://javaops.ru}City"/>
-     *       &lt;/sequence>
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
+     * &lt;complexType&gt;
+     *   &lt;complexContent&gt;
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *       &lt;sequence maxOccurs="unbounded"&gt;
+     *         &lt;element ref="{http://javaops.ru}City"/&gt;
+     *       &lt;/sequence&gt;
+     *     &lt;/restriction&gt;
+     *   &lt;/complexContent&gt;
+     * &lt;/complexType&gt;
      * </pre>
      * 
      * 
@@ -145,7 +182,7 @@ public class Payload {
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
-         * returned list will be present inside the JAXB object.
+         * returned list will be present inside the Jakarta XML Binding object.
          * This is why there is not a <CODE>set</CODE> method for the city property.
          * 
          * <p>
@@ -177,15 +214,75 @@ public class Payload {
      * <p>The following schema fragment specifies the expected content contained within this class.
      * 
      * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;sequence maxOccurs="unbounded" minOccurs="0">
-     *         &lt;element ref="{http://javaops.ru}User"/>
-     *       &lt;/sequence>
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
+     * &lt;complexType&gt;
+     *   &lt;complexContent&gt;
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *       &lt;sequence maxOccurs="unbounded" minOccurs="0"&gt;
+     *         &lt;element ref="{http://javaops.ru}Project"/&gt;
+     *       &lt;/sequence&gt;
+     *     &lt;/restriction&gt;
+     *   &lt;/complexContent&gt;
+     * &lt;/complexType&gt;
+     * </pre>
+     * 
+     * 
+     */
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "", propOrder = {
+        "project"
+    })
+    public static class Projects {
+
+        @XmlElement(name = "Project", namespace = "http://javaops.ru")
+        protected List<Project> project;
+
+        /**
+         * Gets the value of the project property.
+         * 
+         * <p>
+         * This accessor method returns a reference to the live list,
+         * not a snapshot. Therefore any modification you make to the
+         * returned list will be present inside the Jakarta XML Binding object.
+         * This is why there is not a <CODE>set</CODE> method for the project property.
+         * 
+         * <p>
+         * For example, to add a new item, do as follows:
+         * <pre>
+         *    getProject().add(newItem);
+         * </pre>
+         * 
+         * 
+         * <p>
+         * Objects of the following type(s) are allowed in the list
+         * {@link Project }
+         * 
+         * 
+         */
+        public List<Project> getProject() {
+            if (project == null) {
+                project = new ArrayList<Project>();
+            }
+            return this.project;
+        }
+
+    }
+
+
+    /**
+     * <p>Java class for anonymous complex type.
+     * 
+     * <p>The following schema fragment specifies the expected content contained within this class.
+     * 
+     * <pre>
+     * &lt;complexType&gt;
+     *   &lt;complexContent&gt;
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+     *       &lt;sequence maxOccurs="unbounded" minOccurs="0"&gt;
+     *         &lt;element ref="{http://javaops.ru}User"/&gt;
+     *       &lt;/sequence&gt;
+     *     &lt;/restriction&gt;
+     *   &lt;/complexContent&gt;
+     * &lt;/complexType&gt;
      * </pre>
      * 
      * 
@@ -205,7 +302,7 @@ public class Payload {
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
-         * returned list will be present inside the JAXB object.
+         * returned list will be present inside the Jakarta XML Binding object.
          * This is why there is not a <CODE>set</CODE> method for the user property.
          * 
          * <p>
