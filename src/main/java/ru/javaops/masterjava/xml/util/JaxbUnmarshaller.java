@@ -4,13 +4,14 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
 
+import javax.xml.stream.XMLStreamReader;
 import javax.xml.validation.Schema;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
 
 public class JaxbUnmarshaller {
-    private Unmarshaller unmarshaller;
+    private final Unmarshaller unmarshaller;
 
     public JaxbUnmarshaller(JAXBContext ctx) throws JAXBException {
         unmarshaller = ctx.createUnmarshaller();
@@ -30,5 +31,9 @@ public class JaxbUnmarshaller {
 
     public Object unmarshal(String str) throws JAXBException {
         return unmarshal(new StringReader(str));
+    }
+
+    public synchronized <T> T unmarshal(XMLStreamReader reader, Class<T> elementClass) throws JAXBException {
+        return unmarshaller.unmarshal(reader, elementClass).getValue();
     }
 }

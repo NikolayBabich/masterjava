@@ -5,6 +5,7 @@ import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.PropertyException;
 import org.xml.sax.SAXException;
 
+import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class JaxbParser {
     protected JaxbUnmarshaller jaxbUnmarshaller;
     protected Schema schema;
 
-    public JaxbParser(Class... classesToBeBound) {
+    public JaxbParser(Class<?>... classesToBeBound) {
         try {
             init(JAXBContext.newInstance(classesToBeBound));
         } catch (JAXBException e) {
@@ -56,6 +57,10 @@ public class JaxbParser {
 
     public <T> T unmarshal(String str) throws JAXBException {
         return (T) jaxbUnmarshaller.unmarshal(str);
+    }
+
+    public <T> T unmarshal(XMLStreamReader reader, Class<T> elementClass) throws JAXBException {
+        return jaxbUnmarshaller.unmarshal(reader, elementClass);
     }
 
     // Marshaller

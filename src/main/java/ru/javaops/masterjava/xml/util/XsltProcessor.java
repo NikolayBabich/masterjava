@@ -16,7 +16,7 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 
 public class XsltProcessor {
-    private static TransformerFactory FACTORY = TransformerFactory.newInstance();
+    private static final TransformerFactory FACTORY = TransformerFactory.newInstance();
     private final Transformer xformer;
 
     public XsltProcessor(InputStream xslInputStream) {
@@ -28,7 +28,7 @@ public class XsltProcessor {
             Templates template = FACTORY.newTemplates(new StreamSource(xslReader));
             xformer = template.newTransformer();
         } catch (TransformerConfigurationException e) {
-            throw new IllegalStateException("XSLT transformer creation failed: " + e.toString(), e);
+            throw new IllegalStateException("XSLT transformer creation failed: " + e.getMessage(), e);
         }
     }
 
