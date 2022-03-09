@@ -24,11 +24,9 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 import static com.google.common.base.Strings.nullToEmpty;
 import static j2html.TagCreator.*;
-
 
 public class MainXml {
 
@@ -78,9 +76,7 @@ public class MainXml {
         final Set<Project.Group> groups = new HashSet<>(project.getGroup());  // identity compare
         return StreamEx.of(payload.getUsers().getUser())
                 .filter(u -> !Collections.disjoint(groups, u.getGroupRefs()))
-                .collect(
-                        Collectors.toCollection(() -> new TreeSet<>(USER_COMPARATOR))
-                );
+                .toCollection(() -> new TreeSet<>(USER_COMPARATOR));
     }
 
     private static Set<User> processByStax(String projectName, URL payloadUrl) throws Exception {
