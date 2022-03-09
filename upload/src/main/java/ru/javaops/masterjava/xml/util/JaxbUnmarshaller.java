@@ -13,19 +13,16 @@ import java.io.StringReader;
 public class JaxbUnmarshaller {
     private final Unmarshaller unmarshaller;
 
-    public JaxbUnmarshaller(JAXBContext ctx) throws JAXBException {
+    public JaxbUnmarshaller(JAXBContext ctx, Schema schema) throws JAXBException {
         unmarshaller = ctx.createUnmarshaller();
-    }
-
-    public synchronized void setSchema(Schema schema) {
         unmarshaller.setSchema(schema);
     }
 
-    public synchronized Object unmarshal(InputStream is) throws JAXBException {
+    public Object unmarshal(InputStream is) throws JAXBException {
         return unmarshaller.unmarshal(is);
     }
 
-    public synchronized Object unmarshal(Reader reader) throws JAXBException {
+    public Object unmarshal(Reader reader) throws JAXBException {
         return unmarshaller.unmarshal(reader);
     }
 
@@ -33,7 +30,7 @@ public class JaxbUnmarshaller {
         return unmarshal(new StringReader(str));
     }
 
-    public synchronized <T> T unmarshal(XMLStreamReader reader, Class<T> elementClass) throws JAXBException {
+    public <T> T unmarshal(XMLStreamReader reader, Class<T> elementClass) throws JAXBException {
         return unmarshaller.unmarshal(reader, elementClass).getValue();
     }
 }
