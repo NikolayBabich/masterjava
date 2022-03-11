@@ -1,8 +1,8 @@
 package ru.javaops.masterjava.upload;
 
 import jakarta.xml.bind.JAXBException;
-import ru.javaops.masterjava.model.User;
-import ru.javaops.masterjava.model.UserFlag;
+import ru.javaops.masterjava.persist.model.User;
+import ru.javaops.masterjava.persist.model.UserFlag;
 import ru.javaops.masterjava.xml.schema.ObjectFactory;
 import ru.javaops.masterjava.xml.util.JaxbParser;
 import ru.javaops.masterjava.xml.util.JaxbUnmarshaller;
