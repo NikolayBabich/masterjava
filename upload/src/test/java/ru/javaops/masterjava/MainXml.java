@@ -9,6 +9,7 @@ import ru.javaops.masterjava.xml.schema.Payload;
 import ru.javaops.masterjava.xml.schema.Project;
 import ru.javaops.masterjava.xml.schema.User;
 import ru.javaops.masterjava.xml.util.JaxbParser;
+import ru.javaops.masterjava.xml.util.JaxbUnmarshaller;
 import ru.javaops.masterjava.xml.util.Schemas;
 import ru.javaops.masterjava.xml.util.StaxStreamProcessor;
 import ru.javaops.masterjava.xml.util.XsltProcessor;
@@ -68,7 +69,7 @@ public class MainXml {
         parser.setSchema(Schemas.ofClasspath("payload.xsd"));
         Payload payload;
         try (InputStream is = payloadUrl.openStream()) {
-            payload = parser.unmarshal(is);
+            payload = parser.getUnmarshaller().unmarshal(is);
         }
 
         Project project = StreamEx.of(payload.getProjects().getProject())
@@ -105,11 +106,11 @@ public class MainXml {
             // Users loop
             Set<User> users = new TreeSet<>(USER_COMPARATOR);
 
-            JaxbParser parser = new JaxbParser(User.class);
+            JaxbUnmarshaller unmarshaller = new JaxbParser(User.class).getUnmarshaller();
             while (processor.doUntil(XMLEvent.START_ELEMENT, "User")) {
                 String groupRefs = processor.getAttribute("groupRefs");
                 if (!Collections.disjoint(groupNames, Splitter.on(' ').splitToList(nullToEmpty(groupRefs)))) {
-                    User user = parser.unmarshal(processor.getReader(), User.class);
+                    User user = unmarshaller.unmarshal(processor.getReader(), User.class);
                     users.add(user);
                 }
             }

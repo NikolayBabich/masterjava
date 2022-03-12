@@ -13,20 +13,23 @@ import java.io.StringReader;
 public class JaxbUnmarshaller {
     private final Unmarshaller unmarshaller;
 
-    public JaxbUnmarshaller(JAXBContext ctx, Schema schema) throws JAXBException {
+    public JaxbUnmarshaller(JAXBContext ctx) throws JAXBException {
         unmarshaller = ctx.createUnmarshaller();
+    }
+
+    public void setSchema(Schema schema) {
         unmarshaller.setSchema(schema);
     }
 
-    public Object unmarshal(InputStream is) throws JAXBException {
-        return unmarshaller.unmarshal(is);
+    public <T> T unmarshal(InputStream is) throws JAXBException {
+        return (T) unmarshaller.unmarshal(is);
     }
 
-    public Object unmarshal(Reader reader) throws JAXBException {
-        return unmarshaller.unmarshal(reader);
+    public <T> T unmarshal(Reader reader) throws JAXBException {
+        return (T) unmarshaller.unmarshal(reader);
     }
 
-    public Object unmarshal(String str) throws JAXBException {
+    public <T> T unmarshal(String str) throws JAXBException {
         return unmarshal(new StringReader(str));
     }
 
