@@ -2,6 +2,7 @@ package ru.javaops.masterjava.upload;
 
 import org.thymeleaf.context.WebContext;
 import ru.javaops.masterjava.persist.model.User;
+import ru.javaops.masterjava.persist.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -21,6 +22,7 @@ import static ru.javaops.masterjava.common.web.ThymeleafListener.engine;
 public class UploadServlet extends HttpServlet {
 
     private final UserProcessor userProcessor = new UserProcessor();
+    private final UserService userService = new UserService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,12 +37,17 @@ public class UploadServlet extends HttpServlet {
         try {
 //            http://docs.oracle.com/javaee/6/tutorial/doc/glraq.html
             Part filePart = req.getPart("fileToUpload");
+            int chunkSize = Integer.parseInt(req.getParameter("chunkSize"));
             if (filePart.getSize() == 0) {
                 throw new IllegalStateException("Upload file have not been selected");
             }
+            if (chunkSize <= 0) {
+                throw new IllegalArgumentException("Chunk size must pe positive integer");
+            }
             try (InputStream is = filePart.getInputStream()) {
-                List<User> users = userProcessor.process(is);
-                webContext.setVariable("users", users);
+                List<User> usersFromXml = userProcessor.process(is);
+                List<User> existedUsers = userService.insertBatch(usersFromXml, chunkSize);
+                webContext.setVariable("users", existedUsers);
                 engine.process("result", webContext, resp.getWriter());
             }
         } catch (Exception e) {

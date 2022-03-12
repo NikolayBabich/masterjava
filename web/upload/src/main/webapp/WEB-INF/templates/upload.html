@@ -7,7 +7,10 @@
     <form action="" method="post" enctype="multipart/form-data">
       <h3>Select xml file to upload</h3>
       <p>
-        <input type="file" name="fileToUpload" id="fileToUpload"><br/>
+        <input type="file" name="fileToUpload" id="fileToUpload"><br/><br/>
+        <label for="chunkSize">Batch size: </label>
+        <input type="number" name="chunkSize" id="chunkSize" value="5" min="5" max="100" step="5" style="width: 4em">
+        <span>entries by chunk</span>
       </p>
       <p>
         <input type="submit" value="Upload" name="submit">
